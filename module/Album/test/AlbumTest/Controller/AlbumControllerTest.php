@@ -73,4 +73,8 @@ class AlbumControllerTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(200, $response->getStatusCode());
     }
+    
+    public function testGetAlbumTableReturnsAnInstanceOfAlbumTable() {
+        $this->assertInstanceOf('Album\Model\AlbumTable', $this->controller->getAlbumTable());
+    }
 }
