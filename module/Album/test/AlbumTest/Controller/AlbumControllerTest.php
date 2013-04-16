@@ -47,6 +47,7 @@ class AlbumControllerTest extends PHPUnit_Framework_TestCase
     public function testDeleteActionCanBeAccessed()
     {
         $this->routeMatch->setParam('action', 'delete');
+        $this->routeMatch->setParam('id', '1');
 
         $result   = $this->controller->dispatch($this->request);
         $response = $this->controller->getResponse();
@@ -57,6 +58,7 @@ class AlbumControllerTest extends PHPUnit_Framework_TestCase
     public function testEditActionCanBeAccessed()
     {
         $this->routeMatch->setParam('action', 'edit');
+        $this->routeMatch->setParam('id', '1');
 
         $result   = $this->controller->dispatch($this->request);
         $response = $this->controller->getResponse();
@@ -76,5 +78,24 @@ class AlbumControllerTest extends PHPUnit_Framework_TestCase
     
     public function testGetAlbumTableReturnsAnInstanceOfAlbumTable() {
         $this->assertInstanceOf('Album\Model\AlbumTable', $this->controller->getAlbumTable());
+    }
+    
+    public function testEditActionRedirect() {
+        $this->routeMatch->setParam('action', 'edit');
+        $this->routeMatch->setParam('id', '0');
+        
+        $result = $this->controller->dispatch($this->request);
+        $response = $this->controller->getResponse();
+        
+        $this->assertEquals(302, $response->getStatusCode());
+    }
+    
+    public function testDeleteActionRedirect() {
+        $this->routeMatch->setParam('action', 'delete');
+        
+        $result = $this->controller->dispatch($this->request);
+        $response = $this->controller->getResponse();
+        
+        $this->assertEquals(302, $response->getStatusCode());
     }
 }
